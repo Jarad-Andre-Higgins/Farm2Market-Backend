@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Farm2Market</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4CAF50;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        .welcome-title {
+            color: #2E7D32;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .credentials-box {
+            background: #E8F5E8;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .credentials-title {
+            color: #2E7D32;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .credential-item {
+            margin: 10px 0;
+            padding: 8px 0;
+        }
+        .credential-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .credential-value {
+            color: #2E7D32;
+            font-family: monospace;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .verify-button {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .verify-button:hover {
+            background: #45a049;
+        }
+        .features-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .features-list h3 {
+            color: #2E7D32;
+            margin-bottom: 15px;
+        }
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .features-list li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+        .login-url {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🌱 Farm2Market</div>
+            <p>Connecting Farmers and Buyers</p>
+        </div>
+
+        <h2 class="welcome-title">Welcome to Farm2Market, {{ user.first_name }}!</h2>
+
+        <p>Thank you for joining Farm2Market! Your buyer account has been created successfully and you're now part of our growing community of fresh produce enthusiasts.</p>
+
+        <div class="credentials-box">
+            <div class="credentials-title">🔐 Your Login Credentials</div>
+            <div class="credential-item">
+                <span class="credential-label">Email:</span>
+                <span class="credential-value">{{ user.email }}</span>
+            </div>
+            <div class="credential-item">
+                <span class="credential-label">Password:</span>
+                <span class="credential-value">{{ password }}</span>
+            </div>
+        </div>
+
+        <p><strong>Important:</strong> Please verify your email address to activate all features of your account.</p>
+
+        <div style="text-align: center;">
+            <a href="{{ verification_url }}" class="verify-button">Verify Email Address</a>
+        </div>
+
+        <div class="features-list">
+            <h3>🎉 What you can do now:</h3>
+            <ul>
+                <li>Browse fresh products from local farmers</li>
+                <li>Make reservations for your favorite produce</li>
+                <li>Chat with farmers directly</li>
+                <li>Track your purchase history</li>
+                <li>Save your favorite farmers and products</li>
+                <li>Get notified about urgent sales and discounts</li>
+            </ul>
+        </div>
+
+        <p><strong>Ready to start shopping?</strong></p>
+        <div class="login-url">
+            <strong>Login URL:</strong> {{ request.build_absolute_uri }}/loginbuyer.html
+        </div>
+
+        <p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+
+        <div class="footer">
+            <p>Best regards,<br>
+            <strong>The Farm2Market Team</strong></p>
+            <p><small>This email was sent to {{ user.email }}. If you didn't create this account, please ignore this email.</small></p>
+        </div>
+    </div>
+</body>
+</html>
