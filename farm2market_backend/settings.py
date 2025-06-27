@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'farm2market_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'farmtomarket',        # example: farm2market_db
+        'NAME': 'railway',        # example: farm2market_db
         'USER': 'root',        # example: root
-        'PASSWORD': 'Abdel@ictu2023',# example: your password
-        'HOST': 'localhost',
+        'PASSWORD': 'GvdyaOXutmvQRgEiZMgVceyfUPkTBCxB',# example: your password
+        'HOST': 'mysql.railway.internal',
         'PORT': '3306',
     }
 }
