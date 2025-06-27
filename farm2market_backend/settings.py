@@ -104,8 +104,7 @@ else:
             'NAME': os.environ.get('DB_NAME', 'farmtomarket'),
             'USER': os.environ.get('DB_USER', 'root'),
             'PASSWORD': os.environ.get('DB_PASSWORD', 'GvdyaOXutmvQRgEiZMgVceyfUPkTBCxB'),
-            'HOST': os.environ.get('DB_HOST', '
-mysql.railway.internal'),
+            'HOST': os.environ.get('DB_HOST', 'mysql.railway.internal'),
             'PORT': os.environ.get('DB_PORT', '3306'),
         }
     }
