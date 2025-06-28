@@ -6,14 +6,15 @@ import django.utils.timezone
 from django.conf import settings
 from django.db import migrations, models
 
+
 def add_category_name_index(apps, schema_editor):
-    # Ensure the index doesn't already exist before adding it
+    Category = apps.get_model('coreF2M', 'Category')
     with schema_editor.connection.cursor() as cursor:
-        cursor.execute("SHOW INDEX FROM categories WHERE Key_name = 'category_name_idx'")
-        if not cursor.fetchone():  # If index doesn't exist, add it
+        cursor.execute("SHOW INDEX FROM coreF2M_category WHERE Key_name = 'category_name_idx'")
+        if not cursor.fetchone():
             schema_editor.add_index(
-                model,
-                models.Index(fields=['category_name'], name='category_name_idx')
+                Category,
+                models.Index(fields=['name'], name='category_name_idx')
             )
 
 
@@ -31,7 +32,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='category',
             name='approval_status',
-            field=models.CharField(choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')], default='pending', max_length=20),
+            field=models.CharField(
+                choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')],
+                default='pending',
+                max_length=20
+            ),
         ),
         migrations.AddField(
             model_name='category',
@@ -41,7 +46,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='category',
             name='approved_by',
-            field=models.ForeignKey(blank=True, help_text='Admin who approved this category', limit_choices_to={'user_type': 'Admin'}, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='approved_categories', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True,
+                help_text='Admin who approved this category',
+                limit_choices_to={'user_type': 'Admin'},
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name='approved_categories',
+                to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AddField(
             model_name='category',
@@ -52,13 +65,24 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='category',
             name='created_by',
-            field=models.ForeignKey(default=1, help_text='Farmer who created this category', limit_choices_to={'user_type': 'Farmer'}, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                default=1,
+                help_text='Farmer who created this category',
+                limit_choices_to={'user_type': 'Farmer'},
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='category',
             name='description',
-            field=models.TextField(blank=True, help_text='Description of the category', max_length=500, null=True),
+            field=models.TextField(
+                blank=True,
+                help_text='Description of the category',
+                max_length=500,
+                null=True
+            ),
         ),
         migrations.AddField(
             model_name='category',
@@ -68,7 +92,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='category',
             name='name',
-            field=models.CharField(max_length=100, validators=[django.core.validators.RegexValidator(message='Category name can only contain letters, spaces, ampersands, and hyphens', regex='^[a-zA-Z\\s&-]+$')]),
+            field=models.CharField(
+                max_length=100,
+                validators=[django.core.validators.RegexValidator(
+                    message='Category name can only contain letters, spaces, ampersands, and hyphens',
+                    regex='^[a-zA-Z\\s&-]+$'
+                )]
+            ),
         ),
         migrations.AddIndex(
             model_name='category',
@@ -82,8 +112,5 @@ class Migration(migrations.Migration):
             model_name='category',
             constraint=models.UniqueConstraint(fields=('name', 'created_by'), name='unique_category_per_farmer'),
         ),
-    ]
-
-    operations = [
         migrations.RunPython(add_category_name_index),
     ]
