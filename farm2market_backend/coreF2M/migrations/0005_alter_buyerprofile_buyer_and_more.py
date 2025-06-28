@@ -168,10 +168,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name='customuser',
-            index=models.Index(fields=['user_type', 'is_approved'], name='user_type_approved_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='customuser',
             index=models.Index(fields=['email'], name='email_idx'),
         ),
         migrations.AddIndex(
