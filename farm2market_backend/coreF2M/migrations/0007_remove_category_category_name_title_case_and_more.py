@@ -6,18 +6,6 @@ import django.utils.timezone
 from django.conf import settings
 from django.db import migrations, models
 
-
-def add_category_name_index(apps, schema_editor):
-    Category = apps.get_model('coreF2M', 'Category')
-    with schema_editor.connection.cursor() as cursor:
-        cursor.execute("SHOW INDEX FROM coreF2M_category WHERE Key_name = 'category_name_idx'")
-        if not cursor.fetchone():
-            schema_editor.add_index(
-                Category,
-                models.Index(fields=['name'], name='category_name_idx')
-            )
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -112,5 +100,4 @@ class Migration(migrations.Migration):
             model_name='category',
             constraint=models.UniqueConstraint(fields=('name', 'created_by'), name='unique_category_per_farmer'),
         ),
-        migrations.RunPython(add_category_name_index),
     ]
