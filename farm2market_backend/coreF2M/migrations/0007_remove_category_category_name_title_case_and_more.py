@@ -6,6 +6,16 @@ import django.utils.timezone
 from django.conf import settings
 from django.db import migrations, models
 
+def add_category_name_index(apps, schema_editor):
+    # Ensure the index doesn't already exist before adding it
+    with schema_editor.connection.cursor() as cursor:
+        cursor.execute("SHOW INDEX FROM categories WHERE Key_name = 'category_name_idx'")
+        if not cursor.fetchone():  # If index doesn't exist, add it
+            schema_editor.add_index(
+                model,
+                models.Index(fields=['category_name'], name='category_name_idx')
+            )
+
 
 class Migration(migrations.Migration):
 
@@ -72,4 +82,8 @@ class Migration(migrations.Migration):
             model_name='category',
             constraint=models.UniqueConstraint(fields=('name', 'created_by'), name='unique_category_per_farmer'),
         ),
+    ]
+
+    operations = [
+        migrations.RunPython(add_category_name_index),
     ]
